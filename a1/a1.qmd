@@ -1,0 +1,17 @@
+---
+title: "CSC 485 A1"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+## Question 1
+
+### Part 1
+
+We need to figure out the capacity of the cylinders. A cylinder is all the tracks that line up vertically. There are 10 surfaces, so each cylinder is composed of 10 tracks. The capacity of each track is 1000 sectors, so the capacity of each cylinder is 10,000 sectors. The capacity of an average sector is 512 bytes, so the capacity of each cylinder is $10 \times 1000 \times 512$ = 5,120,000 bytes.
+
+### Part 2
+
+If a block were 32 sectors, then two consecutive blocks would be 64 sectors. There's also a gap between each sector, and 20% of the track is used for gaps. If a track has 1000 sectors and 1000 gaps, and the gaps use 20% of the space, then the gaps are a quarter the size of the sectors. Since we're reading 64 sectors, we also need to pass over 63 gaps between sectors so 64\*sector_width + 63\*0.25*sector_width. One sector + one gap makes up $\frac{1}{1000}$ of a track, so one sector = $\frac{0.8}{1000}$ and one track = $\frac{0.2}{1000}$ of the track. So we have $\frac{64(0.8) + 63(0.2)}{1000} = \frac{63.8}{1000}$ of the track. And if we can rotate at 10000 rpm, then it takes us $\frac{63.8}{1000} \frac{1}{10000}$ minutes to cover this distance, or $63.8(10^{-7})(60)$ seconds assuming that we don't need to seek to the first sector.
