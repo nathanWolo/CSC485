@@ -1,0 +1,429 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[many]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={CSC 485 A1},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{CSC 485 A1}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, breakable, borderline west={3pt}{0pt}{shadecolor}, enhanced, interior hidden, frame hidden, boxrule=0pt]}{\end{tcolorbox}}\fi
+
+\hypertarget{question-1}{%
+\subsection{Question 1}\label{question-1}}
+
+\hypertarget{part-1}{%
+\subsubsection{Part 1}\label{part-1}}
+
+We need to figure out the capacity of the cylinders. A cylinder is all
+the tracks that line up vertically. There are 10 surfaces, so each
+cylinder is composed of 10 tracks. The capacity of each track is 1000
+sectors, so the capacity of each cylinder is 10,000 sectors. The
+capacity of an average sector is 512 bytes, so the capacity of each
+cylinder is \(10 \times 1000 \times 512\) = 5,120,000 bytes.
+
+\hypertarget{part-2}{%
+\subsubsection{Part 2}\label{part-2}}
+
+If a block were 32 sectors, then two consecutive blocks would be 64
+sectors. There's also a gap between each sector, and 20\% of the track
+is used for gaps. If a track has 1000 sectors and 1000 gaps, and the
+gaps use 20\% of the space, then the gaps are a quarter the size of the
+sectors. Since we're reading 64 sectors, we also need to pass over 63
+gaps between sectors so 64*sector\_width + 63*0.25*sector\_width. One
+sector + one gap makes up \(\frac{1}{1000}\) of a track, so one sector =
+\(\frac{0.8}{1000}\) and one track = \(\frac{0.2}{1000}\) of the track.
+So we have \(\frac{64(0.8) + 63(0.2)}{1000} = \frac{63.8}{1000}\) of the
+track. And if we can rotate at 10000 rpm, then it takes us
+\(\frac{63.8}{1000} \frac{1}{10000}\) minutes to cover this distance, or
+\(63.8(10^{-7})(60)\) seconds assuming that we don't need to seek to the
+first sector.
+
+\hypertarget{part-3}{%
+\subsubsection{Part 3}\label{part-3}}
+
+We need to find the average time to update two blocks of data on the
+same track, assuming that the head is already on the track. We cannot
+assume that the two blocks are consecutive, so our time is
+
+\begin{itemize}
+\tightlist
+\item
+  half rotation (find start of block 1)
+\item
+  full rotation (read block 1, wait for beginning of block 2, read block
+  2, get back to start of block 1)
+\item
+  half rotation (write block 1, get back to start of block 2, write
+  block 2)
+\end{itemize}
+
+Which is equal to two full rotations, so at 10000 rpm that's
+\(2\frac{60}{10000}\) seconds, or 0.012 seconds.
+
+\hypertarget{part-4}{%
+\subsubsection{Part 4}\label{part-4}}
+
+Disk head starts on track 2500, so it's 25\% of the way into the disk.
+It moves to some random track T, which is uniformly distributed between
+1 and 10000. So 0.25 of the time the head has to move back out, and 75\%
+of the time it has to move in. The expected amount for it to move out is
+1250 tracks, and the expected amount for it to move in is 3750 tracks.
+So the expected amount of seeking is 0.25 * 1250 + 0.75 * 3750 = 3125
+tracks, so our seek time is 1 + 3125 * 0.001 = 4.125 ms.
+
+Now we're on the right track, but we have to spin an expected 180
+degrees to get to the right block, so 0.5 * 1/10000 * 60 * 1000 = 3ms
+
+Then we have to read the block. Assuming that the block is 32 sectors,
+we need to read them all, as well as the gaps in between. So we have
+\$\frac{32 * 0.8 + 31 * 0.2}{1000} \$ of a rotation, and one rotation
+takes 1/10000 * 60 * 1000 = 6ms, so our read time is
+\(\frac{32 * 0.8 + 31 * 0.2}{1000} * 6\) = 0.19 ms.
+
+Adding it all up we have 4.125 + 3 + 0.19 = 7.315 ms.
+
+\hypertarget{question-2}{%
+\subsection{Question 2}\label{question-2}}
+
+The relation \(R\) grows to have as many tuples (160 bytes each) to the
+maximum size that can be sorted by PMM2S on the Megatron 747 described
+in the slides.
+
+\begin{itemize}
+\tightlist
+\item
+  Our block size is \(B = 16384\) bytes
+\item
+  Our main memory size is \(M = 100\) MB
+\item
+  Our record size is \(R = 160\) bytes
+\item
+  Our disk i/o time is 11 ms
+\item
+  Our number of main memory buffers is \(\frac{M}{B}\) blocks
+\item
+  We need an output buffer, so our actual number of input buffers is
+  \(\frac{M}{B} -1\) blocks
+\item
+  Each time we fill our memory with \(\frac{M}{R}\) records
+\item
+  Therefore we are able to sort
+  \(\frac{M}{R} (\frac{M}{B} -1) \approx \frac{M^2}{RB}\) records
+\item
+  So we can sort
+  \(\lfloor \frac{100000000^{2}}{(16384)(160)} \rfloor = 3814697265\)
+  records
+\item
+  Each block can hold \(\frac{16384}{160} = 102\) records
+\item
+  So the relation is \(\lceil \frac{3814697265}{102} \rceil = 37398993\)
+  blocks
+\item
+  Thus we need \(37398993 * 4\) disk i/o operations to sort the relation
+\item
+  Which is a total time of \(37398993 * 4 * 11\) ms = 1645555692 ms
+  \(\approx\) 457 hours \(\approx\) 19 days
+\end{itemize}
+
+\hypertarget{question-3}{%
+\subsection{Question 3}\label{question-3}}
+
+We need one pass algorithms for
+
+\begin{itemize}
+\tightlist
+\item
+  R Left Join S (R in memory)
+\item
+  R Left Join S (S in memory)
+\item
+  R Full Join S (R in memory)
+\end{itemize}
+
+\hypertarget{r-left-join-s-r-in-memory}{%
+\subsubsection{R Left Join S (R in
+memory)}\label{r-left-join-s-r-in-memory}}
+
+\begin{itemize}
+\item
+  First, read \(R\) into memory, taking up \(M-1\) buffers. Then read
+  sections of \(S\) into the last buffer, one at a time.
+\item
+  Build a search structure where the search key is the shared attributes
+  of R and S
+\item
+  For each tuple \(t\) in \(S\), we check if it joins any tuple \(u\) in
+  \(R\). If it does, we output the join of \(t\) with \(u\).
+\item
+  We also output any tuple \(u\) in \(R\) that does not join with any
+  tuple in \(S\), we output \(u\) with null values for the attributes in
+  \(S\) since it is a left join.
+\end{itemize}
+
+\hypertarget{r-left-join-s-s-in-memory}{%
+\subsubsection{R Left Join S (S in
+memory)}\label{r-left-join-s-s-in-memory}}
+
+\begin{itemize}
+\item
+  First, read \(S\) into memory, taking up \(M-1\) buffers. Then read
+  sections of \(R\) into the last buffer, one at a time.
+\item
+  Build a search structure where the search key is the shared attributes
+  of R and S
+\item
+  For each tuple \(t\) in \(R\), we check if it joins any tuple \(u\) in
+  \(S\). If it does, we output the join of \(t\) with \(u\), if not we
+  just output \(t\) with null values for the attributes of \(S\).
+\end{itemize}
+
+\hypertarget{r-full-join-s-r-in-memory}{%
+\subsubsection{R Full Join S (R in
+memory)}\label{r-full-join-s-r-in-memory}}
+
+\begin{itemize}
+\item
+  First, read \(R\) into memory, taking up \(M-1\) buffers. Then read
+  sections of \(S\) into the last buffer, one at a time.
+\item
+  For each tuple \(t\) in the block of \(S\), we check if it joins with
+  any tuple in \(u\) \(R\). If it does, we output the join of \(t\) with
+  \(u\). If not, we output \(t\) with a null value for the attributes in
+  \(R\).
+\item
+  We also output any tuple \(u\) in \(R\) that does not join with any
+  tuple in \(S\), since it is a full join, again with null values for
+  attributes in \(S\).
+\end{itemize}
+
+\hypertarget{question-4}{%
+\subsection{Question 4}\label{question-4}}
+
+In order to do a 2 pass sort-join of R,S we first need to sort them:
+
+\begin{itemize}
+\tightlist
+\item
+  First, sort \(S\). Using the PMM2S algorithm, we can sort \(S\) in
+  \(2 * 500\) disk i/o operations, which takes \(2 * 500 * 11\) ms =
+  11000 ms
+\item
+  Then we sort \(R\), using the PMM2S algorithm, we can sort \(R\) in
+  \(2* 1000\) disk i/o operations, which takes \(2 * 1000 * 11\) ms =
+  22000 ms
+\item
+  Then we do a 2 pass join, so since \(S\) is smaller we'd read it into
+  memory 100 blocks at a time in the outer loop.
+\item
+  In the inner loop we'd read all of \(R\) into memory 1 block at a
+  time, and do a nested loop join.
+\item
+  Since we stored the sorted \(R\) in consecutive blocks, we only need
+  to seek once per outer loop to get to the start of \(R\), then we can
+  read \(R\) sequentially for the rest of the inner loop.
+\item
+  So each iteration of the outer loop is time to seek to the segment of
+  \(S\) we need + read in 100 blocks of \(S\) + seek to start of \(R\) +
+  read all of \(R\) = 15ms + 100 * 0.4ms + 15 ms + 1000 * 0.4ms = 15ms +
+  40ms + 15ms + 400ms = 470ms
+\item
+  We need to run the outer loop 5 times, so the total time is 5 * 470ms
+  = 2350ms
+\item
+  So the total cost is 11000ms + 22000ms + 2350ms = 35350ms
+\end{itemize}
+
+\hypertarget{question-5}{%
+\subsection{Question 5}\label{question-5}}
+
+\hypertarget{part-1-1}{%
+\subsubsection{Part 1}\label{part-1-1}}
+
+Disks 1 and 7 have failed, so we need to recover the data on them. We
+can do this by using the parity information on the other disks.
+
+Lets draw out the matrix for RAID 6
+
+\[
+\begin{pmatrix}
+1,1,1,0,1,0,0\\
+1,1,0,1,0,1,0\\
+1,0,1,1,0,0,1\\
+\end{pmatrix}
+\]
+
+We can see that disk 1 participates in RAID 4 in each of these rows, and
+disk 7 participates in RAID 4 in the last row. We need to find a row
+where the bits for disk 1 and 7 are different. This can be either row 1
+or row 2. Lets say we choose row 1. Then we can recover the data on disk
+1 by XORing the data on disk 2,3 and 5. Once we've recovered disk 1, we
+can recover disk 7 by XORing the data on disk 1, 3, and 4 since 7 has a
+1 on the last row.
+
+\hypertarget{part-2-1}{%
+\subsubsection{Part 2}\label{part-2-1}}
+
+Disk 1 and 4 have failed. Using the matrix from part 1, we find a row
+where disk 1 and 4 have different bits. This is row 1. We can recover
+disk 1 by XORing the data on disk 2, 3, and 5. We can then find a row
+where disk 4s bit is 1, row 2 or 3. Lets say we choose row 2. We can
+recover disk 4 by XORing the data on disk 1, 2, and 6.
+
+\hypertarget{part-3-1}{%
+\subsubsection{Part 3}\label{part-3-1}}
+
+Disks 3 and 6 have failed. Using the matrix we can find a row where they
+have different bits. This is row 1. We can recover disk 3 by XORing the
+data on disk 1, 2, and 5. We can then find a row where disk 6s bit is 1,
+row 2. We can recover disk 6 by XORing the data on disk 1, 2, and 4.
+
+\hypertarget{question-6}{%
+\subsection{Question 6}\label{question-6}}
+
+\includegraphics{https://i.imgur.com/7JYXinJ.png}
+
+
+
+\end{document}

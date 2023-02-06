@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,6 +71,19 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="part-2">Part 2</h3>
 <p>If a block were 32 sectors, then two consecutive blocks would be 64 sectors. There’s also a gap between each sector, and 20% of the track is used for gaps. If a track has 1000 sectors and 1000 gaps, and the gaps use 20% of the space, then the gaps are a quarter the size of the sectors. Since we’re reading 64 sectors, we also need to pass over 63 gaps between sectors so 64*sector_width + 63*0.25*sector_width. One sector + one gap makes up <span class="math inline">\(\frac{1}{1000}\)</span> of a track, so one sector = <span class="math inline">\(\frac{0.8}{1000}\)</span> and one track = <span class="math inline">\(\frac{0.2}{1000}\)</span> of the track. So we have <span class="math inline">\(\frac{64(0.8) + 63(0.2)}{1000} = \frac{63.8}{1000}\)</span> of the track. And if we can rotate at 10000 rpm, then it takes us <span class="math inline">\(\frac{63.8}{1000} \frac{1}{10000}\)</span> minutes to cover this distance, or <span class="math inline">\(63.8(10^{-7})(60)\)</span> seconds assuming that we don’t need to seek to the first sector.</p>
 </section>
+<section id="part-3" class="level3">
+<h3 class="anchored" data-anchor-id="part-3">Part 3</h3>
+<p>We need to find the average time to update two blocks of data on the same track, assuming that the head is already on the track. We cannot assume that the two blocks are consecutive, so our time is</p>
+<ul>
+<li>half rotation (find start of block 1)</li>
+<li>full rotation (read block 1, wait for beginning of block 2, read block 2, get back to start of block 1)</li>
+<li>half rotation (write block 1, get back to start of block 2, write block 2)</li>
+</ul>
+<p>Which is equal to two full rotations, so at 10000 rpm that’s <span class="math inline">\(2\frac{60}{10000}\)</span> seconds, or 0.012 seconds.</p>
+</section>
+<section id="part-4" class="level3">
+<h3 class="anchored" data-anchor-id="part-4">Part 4</h3>
+</section>
 </section>
 <section id="question-2" class="level2">
 <h2 class="anchored" data-anchor-id="question-2">Question 2</h2>
@@ -124,6 +137,62 @@ ul.task-list li input[type="checkbox"] {
 <li><p>We also output any tuple <span class="math inline">\(u\)</span> in <span class="math inline">\(R\)</span> that does not join with any tuple in <span class="math inline">\(S\)</span>, since it is a full join, again with null values for attributes in <span class="math inline">\(S\)</span>.</p></li>
 </ul>
 </section>
+</section>
+<section id="question-4" class="level2">
+<h2 class="anchored" data-anchor-id="question-4">Question 4</h2>
+<p>In order to do a 2 pass sort-join of R,S we first need to sort them:</p>
+<ul>
+<li>First, sort <span class="math inline">\(S\)</span>. Using the PMM2S algorithm, we can sort <span class="math inline">\(S\)</span> in <span class="math inline">\(2 * 500\)</span> disk i/o operations, which takes <span class="math inline">\(2 * 500 * 11\)</span> ms = 11000 ms</li>
+<li>Then we sort <span class="math inline">\(R\)</span>, using the PMM2S algorithm, we can sort <span class="math inline">\(R\)</span> in <span class="math inline">\(2* 1000\)</span> disk i/o operations, which takes <span class="math inline">\(2 * 1000 * 11\)</span> ms = 22000 ms</li>
+<li>Then we do a 2 pass join, so since <span class="math inline">\(S\)</span> is smaller we’d read it into memory 100 blocks at a time in the outer loop.</li>
+<li>In the inner loop we’d read all of <span class="math inline">\(R\)</span> into memory 1 block at a time, and do a nested loop join.</li>
+<li>Since we stored the sorted <span class="math inline">\(R\)</span> in consecutive blocks, we only need to seek once per outer loop to get to the start of <span class="math inline">\(R\)</span>, then we can read <span class="math inline">\(R\)</span> sequentially for the rest of the inner loop.</li>
+<li>So each iteration of the outer loop is time to seek to the segment of <span class="math inline">\(S\)</span> we need + read in 100 blocks of <span class="math inline">\(S\)</span> + seek to start of <span class="math inline">\(R\)</span> + read all of <span class="math inline">\(R\)</span> = 15ms + 100 * 0.4ms + 15 ms + 1000 * 0.4ms = 15ms + 40ms + 15ms + 400ms = 470ms</li>
+<li>We need to run the outer loop 5 times, so the total time is 5 * 470ms = 2350ms</li>
+<li>So the total cost is 11000ms + 22000ms + 2350ms = 35350ms</li>
+</ul>
+</section>
+<section id="question-5" class="level2">
+<h2 class="anchored" data-anchor-id="question-5">Question 5</h2>
+<section id="part-1-1" class="level3">
+<h3 class="anchored" data-anchor-id="part-1-1">Part 1</h3>
+<p>Disks 1 and 7 have failed, so we need to recover the data on them. We can do this by using the parity information on the other disks.</p>
+<p>Lets draw out the matrix for RAID 6</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+1,1,1,0,1,0,0\\
+1,1,0,1,0,1,0\\
+1,0,1,1,0,0,1\\
+\end{pmatrix}
+\]</span></p>
+<p>We can see that disk 1 participates in RAID 4 in each of these rows, and disk 7 participates in RAID 4 in the last row. We need to find a row where the bits for disk 1 and 7 are different. This can be either row 1 or row 2. Lets say we choose row 1. Then we can recover the data on disk 1 by XORing the data on disk 2,3 and 5. Once we’ve recovered disk 1, we can recover disk 7 by XORing the data on disk 1, 3, and 4 since 7 has a 1 on the last row.</p>
+</section>
+<section id="part-2-1" class="level3">
+<h3 class="anchored" data-anchor-id="part-2-1">Part 2</h3>
+<p>Disk 1 and 4 have failed. Using the matrix from part 1, we find a row where disk 1 and 4 have different bits. This is row 1. We can recover disk 1 by XORing the data on disk 2, 3, and 5. We can then find a row where disk 4s bit is 1, row 2 or 3. Lets say we choose row 2. We can recover disk 4 by XORing the data on disk 1, 2, and 6.</p>
+</section>
+<section id="part-3-1" class="level3">
+<h3 class="anchored" data-anchor-id="part-3-1">Part 3</h3>
+<p>Disks 3 and 6 have failed. Using the matrix we can find a row where they have different bits. This is row 1. We can recover disk 3 by XORing the data on disk 1, 2, and 5. We can then find a row where disk 6s bit is 1, row 2. We can recover disk 6 by XORing the data on disk 1, 2, and 4.</p>
+</section>
+</section>
+<section id="question-6" class="level2">
+<h2 class="anchored" data-anchor-id="question-6">Question 6</h2>
+<p>The parity checks of disks 9 and 10 can be represented by the matrix</p>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section">1 2 3 4 5 6 7 8 9 10 11</h2>
+<p>1 1 1 1 0 0 0 0 1 0 0 0 0 0 0 1 1 1 1 0 1 0 ? ? ? ? ? ? ? ? 0 0 1</p>
+<p>Before we add a third row representing the parity check of disk 11, recall that we can recover from two disk failures if and only if the two disks have different columns. We want to maximize the number of pairs of disks that no longer have identical columns.<br>
+As is now, 1,2,3,4 have identical columns, and also 5,6,7,8 have identical columns. Where to put 1 for “?” and where 0, so that we get the greatest number of non-identical columns?</p>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1">1 2 3 4 5 6 7 8 9 10 11</h2>
+<p>1 1 1 1 0 0 0 0 1 0 0 0 0 0 0 1 1 1 1 0 1 0 1 0 1 0 1 0 1 0 0 0 1</p>
+<p>With this configuration we have 4 distinct columns, 1,3 + 2,4 + 5,7 + 6,8. This is the best we can do, since the way disks 9 and 10 are configured, there is no overlap between them, so we only have 2 distinct columns per group. So we can only double the amount of existing distinct columns, which is 2, to get 4.</p>
+<div class="layout=&quot;center&quot;">
+<p><img src="https://i.imgur.com/7JYXinJ.png" class="img-fluid"></p>
+</div>
 </section>
 
 </main>
