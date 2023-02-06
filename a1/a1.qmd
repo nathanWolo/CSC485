@@ -17,15 +17,62 @@ We need to figure out the capacity of the cylinders. A cylinder is all the track
 If a block were 32 sectors, then two consecutive blocks would be 64 sectors. There's also a gap between each sector, and 20% of the track is used for gaps. If a track has 1000 sectors and 1000 gaps, and the gaps use 20% of the space, then the gaps are a quarter the size of the sectors. Since we're reading 64 sectors, we also need to pass over 63 gaps between sectors so 64\*sector_width + 63\*0.25*sector_width. One sector + one gap makes up $\frac{1}{1000}$ of a track, so one sector = $\frac{0.8}{1000}$ and one track = $\frac{0.2}{1000}$ of the track. So we have $\frac{64(0.8) + 63(0.2)}{1000} = \frac{63.8}{1000}$ of the track. And if we can rotate at 10000 rpm, then it takes us $\frac{63.8}{1000} \frac{1}{10000}$ minutes to cover this distance, or $63.8(10^{-7})(60)$ seconds assuming that we don't need to seek to the first sector.
 
 
-### Part 3
-
-We need to find the average time to update two blocks of data on the same track, assuming that the head is already on the track. We cannot assume that the two blocks are consecutive, so our time is
 
 
-* half rotation (find start of block 1)
-* full rotation (read block 1, wait for beginning of block 2, read block 2, get back to start of block 1)
-* half rotation (write block 1, get back to start of block 2, write block 2)
 
-Which is equal to two full rotations, so at 10000 rpm that's $2\frac{60}{10000}$ seconds, or 0.012 seconds.
+## Question 2
 
-### Part 4
+The relation $R$ grows to have as many tuples (160 bytes each) to the maximum size that can be sorted by PMM2S on the Megatron 747 described in the slides.
+
+
+* Our block size is $B = 16384$ bytes
+* Our main memory size is $M = 100$ MB
+* Our record size is $R = 160$ bytes
+* Our disk i/o time is 11 ms
+* Our number of main memory buffers is $\frac{M}{B}$ blocks
+* We need an output buffer, so our actual number of input buffers is $\frac{M}{B} -1$ blocks
+* Each time we fill our memory with $\frac{M}{R}$ records
+* Therefore we are able to sort $\frac{M}{R} (\frac{M}{B} -1) \approx \frac{M^2}{RB}$ records
+* So we can sort $\lfloor \frac{100000000^{2}}{(16384)(160)} \rfloor = 3814697265$ records
+* Each block can hold $\frac{16384}{160} = 102$ records
+* So the relation is $\lceil \frac{3814697265}{102} \rceil = 37398993$ blocks
+* Thus we need $37398993 * 4$ disk i/o operations to sort the relation
+* Which is a total time of $37398993 * 4 * 11$ ms = 1645555692 ms $\approx$ 457 hours $\approx$ 19 days
+
+
+## Question 3
+
+We need one pass algorithms for 
+
+* R Left Join S (R in memory)
+* R Left Join S (S in memory)
+* R Full Join S (R in memory)
+
+### R Left Join S (R in memory)
+
+* First, read $R$ into memory, taking up $M-1$ buffers. Then read sections of $S$ into the last buffer, one at a time. 
+
+* Build a search structure where the search key is the shared attributes of R and S
+
+* For each tuple $t$ in $S$, we check if it joins any tuple $u$ in $R$. If it does, we output the join of $t$ with $u$.
+
+* We also output any tuple $u$ in $R$ that does not join with any tuple in $S$, we output $u$ with null values for the attributes in $S$ since it is a left join.
+
+### R Left Join S (S in memory)
+
+* First, read $S$ into memory, taking up $M-1$ buffers. Then read sections of $R$ into the last buffer, one at a time.
+
+* Build a search structure where the search key is the shared attributes of R and S
+
+* For each tuple $t$ in $R$, we check if it joins any tuple $u$ in $S$. If it does, we output the join of $t$ with $u$, if not we just output $t$ with null values for the attributes of $S$.
+
+### R Full Join S (R in memory)
+
+* First, read $R$ into memory, taking up $M-1$ buffers. Then read sections of $S$ into the last buffer, one at a time.
+
+* For each tuple $t$ in the block of $S$, we check if it joins with any tuple in $u$ $R$. If it does, we output the join of $t$ with $u$. If not, we output $t$ with a null value for the attributes in $R$.
+
+* We also output any tuple $u$ in $R$ that does not join with any tuple in $S$, since it is a full join, again with null values for attributes in $S$.
+
+
+## Question 4
